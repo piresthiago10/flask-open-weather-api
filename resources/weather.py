@@ -7,12 +7,24 @@ class Weather():
         self._city_name = city_name
 
     def get_api_key(self):
+        """Read the file config.ini and get the api key
+
+        Returns:
+            string: api key
+        """
         config = configparser.ConfigParser()
         config.read('config.ini')
         return config['openweathermap']['api']
 
     def get_weather_data(self, city_name):
-        # melhorar parte do código
+        """Access the weather api
+
+        Args:
+            city_name (string): a city name
+
+        Returns:
+            json: data about the weather of a specifc city
+        """
         api_key = self.get_api_key()
         url = "http://api.openweathermap.org/data/2.5/weather?q={}&appid={}".format(
             city_name, api_key)
@@ -21,11 +33,23 @@ class Weather():
         return data.json()
 
     def kelvin_to_celsius(self, temp):
+        """Convert kelvin to celsius
+
+        Args:
+            temp (int): temperature in kelvin
+
+        Returns:
+            int: temperature in celsius
+        """
         temp_celsius = int("{0:.0f}".format(int(temp) - 273.15))
         return temp_celsius
 
     def get(self):
+        """Get the data of a specifc city and filter specifc values
 
+        Returns:
+            dict, status code: dict with specif values and status code.
+        """
         self.weather_data = self.get_weather_data(self._city_name)
         if self.weather_data["cod"] == 200:
             city = self.weather_data["name"]
