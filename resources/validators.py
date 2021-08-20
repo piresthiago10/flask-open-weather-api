@@ -31,3 +31,21 @@ def max_number_validator(max_number):
         is_numeric = False
 
     return is_numeric
+
+def attribute_validator(atribute):
+    """Verify if the given attribute matches with acceptable attribute.
+
+    Args:
+        acceptable_attribute (string): acceptable attribute
+        atribute (string): attribute from request
+
+    Returns:
+        boolean: comparison result
+    """
+    if atribute is not None:
+        is_valid = True
+    else:
+        is_valid = False
+    
+    return is_valid
+
