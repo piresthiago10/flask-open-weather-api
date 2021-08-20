@@ -74,14 +74,14 @@ def get_city_name(city_name):
         city_name (string): name of a specific city
 
     Returns:
-        dict: data of a specific city
+        json: data of a specific city
     """
     if validators.city_name_validator(city_name):
         city = verify_status_code(city_name)
     else:
         return {"message": "The city name must have just letters"}
 
-    return city
+    return jsonify(city)
 
 
 @app.route("/weather")
@@ -90,10 +90,14 @@ def get_cities_number():
     and return a dict with n numbers of cities
 
     Returns:
-        dict: cities storaged in the cache
+        json: cities storaged in the cache
     """
     lasted_cities = []
     max_number = request.args.get('max')
+
+    if not validators.attribute_validator(max_number):
+        return {"message": "Wrong attribute"}
+
     cities_length = len(searched_cities)
 
     if validators.max_number_validator(max_number):
@@ -105,7 +109,7 @@ def get_cities_number():
     else: 
         return {"message": "The max have to be a number greater than 0"}
 
-    return manage_cached_dict(lasted_cities)
+    return jsonify(manage_cached_dict(lasted_cities))
 
 
 if __name__ == '__main__':
