@@ -42,6 +42,33 @@ python tests_weather.py
 ```
 
 
+## Endpoints:
+* /weather/rio%20de%20janeiro Search for a city and caches it.
+Example:
+```
+{
+"city": "Rio de Janeiro",
+"description": 23,
+"temp": "clear sky"
+}
+```
+* /weather?max=2  List n entries of cached cities
+Example:
+```
+{
+"Liverpool": {
+"city": "Liverpool",
+"description": 17,
+"temp": "overcast clouds"
+},
+"Rio de Janeiro": {
+"city": "Rio de Janeiro",
+"description": 23,
+"temp": "clear sky"
+}
+}
+```
+
 ## Tools
 
 * [Visual Studio Code](https://code.visualstudio.com/)
