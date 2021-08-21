@@ -2,7 +2,7 @@ import unittest
 
 from werkzeug.wrappers import response
 
-from app import app, cache, searched_cities
+from app import app, cache
 
 
 class WeatherTest(unittest.TestCase):
@@ -16,24 +16,14 @@ class WeatherTest(unittest.TestCase):
         cache.set("boston", response.json)
         self.assertEqual(response.json, cache.get("boston"))
 
-    def test_searched_cities(self):
-        response = self.app.get("/weather/texas")
-        response = self.app.get("/weather/rio de janeiro")
-        response = self.app.get("/weather/lisboa")
-        response = self.app.get("/weather/rome")
-        response = self.app.get("/weather/lima")
-        cities = ['Boston', 'Texas', 'Rio de Janeiro',
-                  'Lisbon', 'Rome', 'Lima']
-        self.assertEqual(searched_cities, cities)
-
     def test_get_invalid_city(self):
         response = self.app.get("/weather/boston7")
-        message = {'message': 'The city name must have just letters'}
+        message = {'message': "Sorry. We couldn't find the specified city."}
         self.assertEqual(response.json, message)
 
     def test_get_nowhere_city(self):
         response = self.app.get("/weather/neverland")
-        message = {'mesage': "Sorry. We couldn't find the specified city."}
+        message = {'message': "Sorry. We couldn't find the specified city."}
         self.assertEqual(response.json, message)
 
     def test_attribute(self):
@@ -68,17 +58,17 @@ class WeatherTest(unittest.TestCase):
 
     def test_negative_attribute_value(self):
         response = self.app.get("/weather?max=-3")
-        message = {'message': 'The max have to be a number greater than 0'}
+        message = {'message': 'The max has to be a number greater than 0'}
         self.assertEqual(response.json, message)
 
     def test_wrong_attribute_value(self):
         response = self.app.get("/weather?max=two")
-        message = {'message': 'The max have to be a number greater than 0'}
+        message = {'message': 'The max has to be a number greater than 0'}
         self.assertEqual(response.json, message)
 
     def test_wrong_attribute(self):
         response = self.app.get("/weather?maxx=3")
-        message = {'message': 'Wrong attribute'}
+        message = {"message": "The max has to be a number greater than 0"}
         self.assertEqual(response.json, message)
 
 
