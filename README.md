@@ -41,6 +41,7 @@ python app.py
 python tests_weather.py
 ```
 
+
 ## Endpoints:
 * /weather/rio%20de%20janeiro Search for a city and caches it.
 Example:
